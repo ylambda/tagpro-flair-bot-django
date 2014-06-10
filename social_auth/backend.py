@@ -1,4 +1,6 @@
+from social.backends.base import BaseAuth
 from social.backends.reddit import RedditOAuth2 as DefaultRedditOAuth2
+
 from django.conf import settings
 
 class RedditOAuth2(DefaultRedditOAuth2):

@@ -1,15 +1,46 @@
 {% extends "base.html" %}
 {% block content %}
+
+<h2>Step 1</h2>
+<p><em>Link your Reddit account</em></p>
 {% if backends.associated %}
-    <p>Logged in as {{ request.user.username }}</p>
+    <p>Logged into Reddit as {{ request.user.username }}</p>
     <form action="{% url 'social:disconnect' 'reddit' %}" method="post">
         {% csrf_token %}
-        <input type="submit" value="Disconnect"/>
+        <input type="submit" value="Log out from Reddit"/>
     </form>
-
 {% else %}
-    <p>
-    <a href="{% url 'social:begin' 'reddit' %}">Reddit OAuth2</a>
-    </p>
+    <p><a href="{% url 'social:begin' 'reddit' %}">Link Reddit Account</a></p>
 {% endif %}
+
+<h2>Step 2</h2>
+<p><em>Link your TagPro account</em></p>
+{% if backends.associated %}
+    {% if request.session.tp_authenticated %}
+        <p>Authenticated with TagPro Profile <a href="{{ request.session.tp_profile }}">{{ request.session.tp_profile }}</a></p>
+    {% else %}
+        <p>Change your name to <strong>{{ request.session.tagpro_token }}</strong></p>
+        <p>Then, enter your profile URL below:</p>
+        <form action="{% url 'auth_tagpro' %}" method="post">
+            {% csrf_token %}
+            <label for="profile_url">TagPro Profile URL:</label>
+            <input type="text" name="profile_url" />
+            <input type="submit" value="Link TagPro Profile" />
+        </form>
+    {% endif %}
+{% endif %}
+
+
+<h2>Step 3</h2>
+<p><em>Choose your flair</em></p>
+{% if request.session.tp_authenticated %}
+    <ul>
+    {% for flair in request.session.available_flair %}
+        <li>{{ flair|safe }}</li>
+    {% empty %}
+        <li>Sorry you don't have any flair available :(</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+
 {% endblock %}

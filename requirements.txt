@@ -1,3 +1,5 @@
+BeautifulSoup==3.2.1
 Django==1.6.5
 django-toolbelt==0.0.1
 python-social-auth==0.1.26
+requests==2.3.0

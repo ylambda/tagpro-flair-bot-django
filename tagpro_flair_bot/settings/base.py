@@ -49,14 +49,28 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, "templates/"),)
 
 AUTHENTICATION_BACKENDS = (
-  'reddit_auth.backend.RedditOAuth2',
-  'django.contrib.auth.backends.ModelBackend',
+    'social_auth.backend.RedditOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_PIPELINE = (
+    'social.pipeline.social_auth.social_details',
+    'social.pipeline.social_auth.social_uid',
+    'social.pipeline.social_auth.auth_allowed',
+    'social.pipeline.social_auth.social_user',
+    'social.pipeline.user.get_username',
+    'social.pipeline.user.create_user',
+    'social.pipeline.social_auth.associate_user',
+    'social.pipeline.social_auth.load_extra_data',
+    'social.pipeline.user.user_details',
+    'social_auth.pipeline.set_token'
 )
 
 SOCIAL_AUTH_DISCONNECT_PIPELINE = (
     'social.pipeline.disconnect.get_entries',
     'social.pipeline.disconnect.revoke_tokens',
-    'social.pipeline.disconnect.disconnect'
+    'social.pipeline.disconnect.disconnect',
+    'social_auth.pipeline.deauth_tagpro'
 )
 
 SOCIAL_AUTH_REDDIT_KEY = os.environ.get('SOCIAL_AUTH_REDDIT_KEY', None)
