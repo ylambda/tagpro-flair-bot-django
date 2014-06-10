@@ -34,9 +34,12 @@
 <h2>Step 3</h2>
 <p><em>Choose your flair</em></p>
 {% if request.session.tp_authenticated %}
+    <p>You can change your name back now.</p>
     <ul>
-    {% for flair in request.session.available_flair %}
-        <li>{{ flair|safe }}</li>
+    {% for flair, name in FLAIRS_BY_KEY.iteritems %}
+        {% if flair in request.session.available_flair %}
+        <li><a href="{% url 'set_flair' flair=flair %}">{{ name|safe }}</a></li>
+        {% endif %}
     {% empty %}
         <li>Sorry you don't have any flair available :(</li>
     {% endfor %}
