@@ -1,0 +1,5 @@
+*.pyc
+/ENV
+/.env
+/db.sqlite3
+localsettings.py

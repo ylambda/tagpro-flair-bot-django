@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+{% if backends.associated %}
+    <p>Logged in as {{ request.user.username }}</p>
+    <form action="{% url 'social:disconnect' 'reddit' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Disconnect"/>
+    </form>
+
+{% else %}
+    <p>
+    <a href="{% url 'social:begin' 'reddit' %}">Reddit OAuth2</a>
+    </p>
+{% endif %}
+{% endblock %}
