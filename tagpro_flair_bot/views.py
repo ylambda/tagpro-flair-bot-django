@@ -72,10 +72,13 @@ def set_flair(request, flair):
     Set the user's flair for the subreddit.
     """
     if 'available_flair' in request.session and flair in request.session['available_flair'] and flair in FLAIRS_BY_KEY.keys():
+        flair_data = reddit_api.get_flair(
+            settings.REDDIT_MOD_SUBREDDIT, request.user.username) or {}
+        flair_text = flair_data.get('flair_text', '')
         reddit_api.set_flair(
             settings.REDDIT_MOD_SUBREDDIT,
             request.user.username,
-            flair_css_class=flair)
+            flair_css_class=flair, flair_text=flair_text)
         messages.success(request, "Flair set!")
     else:
         messages.error(request, "Sorry, you can't have that flair :(")
