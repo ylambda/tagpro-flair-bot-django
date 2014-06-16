@@ -16,3 +16,5 @@ def deauth_tagpro(*args, **kwargs):
         del request.session['tp_profile']
     if 'available_flair' in request.session:
         del request.session['available_flair']
+    if 'current_flair' in request.session:
+        del request.session['current_flair']

@@ -1,9 +1,11 @@
 from BeautifulSoup import BeautifulSoup
+import json
 import praw
 import requests
 from django.conf import settings
 from django.contrib import messages
 from django.core.urlresolvers import reverse
+from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.views.generic import TemplateView
 from social_auth.pipeline import deauth_tagpro as deauth_tagpro_pipeline
@@ -14,6 +16,8 @@ reddit_api = praw.Reddit(user_agent=settings.BOT_USER_AGENT)
 reddit_api.login(username=settings.REDDIT_MOD_USERNAME, password=settings.REDDIT_MOD_PASSWORD)
 
 
+def json_response(data):
+    return HttpResponse(json.dumps(data), content_type="application/json")
 
 
 class HomeView(TemplateView):
@@ -53,6 +57,7 @@ def auth_tagpro(request):
     if tagpro_name == token:
         request.session['tp_authenticated'] = True
         request.session['tp_profile'] = profile_url
+        request.session['current_flair'] = get_current_flair(request)
         request.session['available_flair'] = parse_available_flair(parsed)
     else:
         messages.error(request, "Your name doesn't match the token!")
@@ -67,19 +72,33 @@ def deauth_tagpro(request):
     return redirect(reverse('home'))
 
 
-def set_flair(request, flair):
+def get_current_flair(request):
+    return reddit_api.get_flair(
+        settings.REDDIT_MOD_SUBREDDIT, request.user.username) or {}
+
+def set_flair(request):
     """
     Set the user's flair for the subreddit.
     """
-    if 'available_flair' in request.session and flair in request.session['available_flair'] and flair in FLAIRS_BY_KEY.keys():
-        flair_data = reddit_api.get_flair(
-            settings.REDDIT_MOD_SUBREDDIT, request.user.username) or {}
-        flair_text = flair_data.get('flair_text', '')
+    flair = request.POST.get('flair', None)
+    if (
+            'available_flair' in request.session and 
+            flair in request.session['available_flair'] and 
+            flair in FLAIR.keys()):
+        request.session['current_flair'] = request.session['current_flair'] or get_current_flair(request)
+        flair_text = request.session['current_flair'].get('flair_text', '')
         reddit_api.set_flair(
             settings.REDDIT_MOD_SUBREDDIT,
             request.user.username,
             flair_css_class=flair, flair_text=flair_text)
-        messages.success(request, "Flair set!")
+        request.session['current_flair']['flair_css_class'] = flair
+        if request.is_ajax():
+            return json_response({'success': True})
+        else:
+            messages.success(request, "Flair set!")
     else:
-        messages.error(request, "Sorry, you can't have that flair :(")
+        error = "Sorry, you can't have that flair :("
+        if request.is_ajax():
+            return json_response({'success': False, 'error': error})
+        messages.error(request, error)
     return redirect(reverse("home"))
