@@ -7,13 +7,13 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.views.generic import TemplateView
 from social_auth.pipeline import deauth_tagpro as deauth_tagpro_pipeline
+from tpflair.flair import FLAIR_DATA, FLAIR, FLAIR_BY_POSITION
 
 
 reddit_api = praw.Reddit(user_agent=settings.BOT_USER_AGENT)
 reddit_api.login(username=settings.REDDIT_MOD_USERNAME, password=settings.REDDIT_MOD_PASSWORD)
 
 
-FLAIRS_BY_KEY = {v[1]: v[0] for k, v in settings.FLAIRS_BY_POSITION.iteritems()}
 
 
 class HomeView(TemplateView):
@@ -21,7 +21,7 @@ class HomeView(TemplateView):
     
     def get_context_data(self):
         context = super(HomeView, self).get_context_data()
-        context.update({'FLAIRS_BY_KEY': FLAIRS_BY_KEY})
+        context.update({'FLAIR_DATA': FLAIR_DATA})
         return context
 
 
@@ -37,7 +37,7 @@ def parse_available_flair(html):
         icon = row.find('div')
         if icon and row.get("class", "") != "fade":
             position = icon['style'][len('background-position: '):]
-            flairs.append(settings.FLAIRS_BY_POSITION[position][1])
+            flairs.append(FLAIR_BY_POSITION[position]['id'])
     return flairs
 
 

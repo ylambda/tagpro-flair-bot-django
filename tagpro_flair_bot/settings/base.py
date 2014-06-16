@@ -127,31 +127,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
-
-FLAIRS_BY_POSITION = {
-    "-32px -16px": ("TagPro Developer", "Developer2"),
-    "0px -16px": ("Community Contributor", "Contributor"),
-    "-16px -16px": ("Level 1 Donor ($10)", "Donator"),
-    "-48px -16px": ("Level 2 Donor ($40)", "Donator2"),
-    "-64px -16px": ("Level 3 Donor ($100)", "Donator3"),
-    "-80px -16px": ("Community Contest Winner", "Contest"),
-    "-32px 0px": ("Monthly Leader Board Winner", "Monthly"),
-    "-16px 0px": ("Weekly Leader Board Winner", "Weekly"),
-    "0px 0px": ("Daily Leader Board Winner", "Daily"),
-    "0px -32px": ("Happy Birthday TagPro", "Birthday"),
-    "-16px -32px": ("Lucky You", "Lucky"),
-    "-32px -32px": ("How Foolish", "Fools"),
-    "-48px -32px": ("Hare Today, Goon Tomorrow", "Easter"),
-    "0px -80px": ("Bacon (6°)", "Bacon"),
-    "-16px -80px": ("Moon (11°)", "Moon"),
-    "-32px -80px": ("Freezing (32°)", "Freezing"),
-    "-48px -80px": ("Dolphin (42°)", "Dolphin"),
-    "-64px -80px": ("Alien (51°)", "Alien"),
-    "-80px -80px": ("Road Sign (66°)", "Route"),
-    "-96px -80px": ("Peace (69°)", "Peace"),
-    "-112px -80px": ("Microphone (98°)", "Microphone"),
-    "-128px -80px": ("Boiling (100°)", "Boiling"),
-    "-144px -80px": ("Bowling (300°)", "Bowling"),
-    "-160px -80px": ("Pi (314°)", "Pi")
-}
-
