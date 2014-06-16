@@ -1,9 +1,12 @@
+{% load staticfiles %}
 <html doctype="html">
 <head>
 <title>{% block title %}TagPro Flair Bot{% endblock %}</title>
+<link rel="stylesheet" type="text/css" href="http://tagpro.gg/stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
 </head>
 <body>
-
+<article>
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}
@@ -12,7 +15,13 @@
 </ul>
 {% endif %}
 
+{% block heading %}<h1>/r/TagPro Flair Bot</h1>{% endblock %}
+
 {% block content %}
-{% endblock %}    
+{% endblock %}
+</article>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="{% static 'js/jquery.cookie.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
 </body>
 </html>

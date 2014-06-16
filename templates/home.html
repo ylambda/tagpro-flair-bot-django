@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
+<div class="step" id="step1">
 <h2>Step 1</h2>
 <p><em>Link your Reddit account</em></p>
 {% if backends.associated %}
@@ -12,7 +13,9 @@
 {% else %}
     <p><a href="{% url 'social:begin' 'reddit' %}">Link Reddit Account</a></p>
 {% endif %}
+</div>
 
+<div class="step" id="step2">
 <h2>Step 2</h2>
 <p><em>Link your TagPro account</em></p>
 {% if backends.associated %}
@@ -29,24 +32,49 @@
         </form>
     {% endif %}
 {% endif %}
+</div>
 
-
+<div class="step" id="step3">
 <h2>Step 3</h2>
+<h3>Change your name back.</h3>
+</div>
+
+<div class="step" id="step4">
+<h2>Step 4</h2>
 <p><em>Choose your flair</em></p>
 {% if request.session.tp_authenticated %}
-    <p>You can change your name back now.</p>
+        
     {% if request.session.available_flair %}
-        <ul>
-        {% for flair, name in FLAIRS_BY_KEY.iteritems %}
-            {% if flair in request.session.available_flair %}
-            <li><a href="{% url 'set_flair' flair=flair %}">{{ name|safe }}</a></li>
-            {% endif %}
+    <form action="{% url 'set_flair' %}" method="post" id="flair-form">
+    {% csrf_token %}
+    <table class="board">
+        <tbody>
+        <tr>
+            <th></th>
+            <th>Award</th>
+            <th>Selected</th>
+        </tr>
+        {% for flair, name, position in FLAIR_DATA %}
+            <tr{% if not flair in request.session.available_flair %} class="fade"{% endif %}>
+                <td><div style="background-position: {{ position }}" class="flair"></div></td>
+                <td>{{ name|safe }}</td>
+                <td>
+                    {% if flair in request.session.available_flair %}
+                        <input type="radio" name="flair" value="{{ flair }}" 
+                            {% ifequal flair request.session.current_flair.flair_css_class %}checked="checked"{% endifequal %} />
+                    {% endif %}
+                </td>
+            </tr>
         {% endfor %}
-        </ul>
+        </tbody>
+    </table>
+    <input type="submit" value="Set flair" />
+    </form>
     {% else %}
         <p>Sorry, you haven't won any flair :( Keep playing!</p>
     {% endif %}
 
 {% endif %}
+</div>
 
 {% endblock %}
