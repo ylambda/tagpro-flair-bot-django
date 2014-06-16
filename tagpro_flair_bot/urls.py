@@ -1,4 +1,6 @@
+from django.conf import settings
 from django.conf.urls import patterns, include, url
+from django.conf.urls.static import static
 
 from views import auth_tagpro, deauth_tagpro, set_flair, HomeView
 
@@ -12,3 +14,5 @@ urlpatterns = patterns('',
     url(r'^set_flair/(?P<flair>[-\w]+)/$', set_flair, name="set_flair"),
     url('', include('social.apps.django_app.urls', namespace='social')),
 )
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
