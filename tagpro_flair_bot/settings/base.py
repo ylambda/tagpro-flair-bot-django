@@ -15,7 +15,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Static asset configuration
 STATIC_ROOT = 'staticfiles'
@@ -94,6 +94,7 @@ REDDIT_MAX_RETRIES = 5
 BOT_USER_AGENT = "/r/tagpro flair bot"
 
 LOGIN_REDIRECT_URL = '/'
+LOGIN_ERROR_URL = '/'
 
 ROOT_URLCONF = 'tagpro_flair_bot.urls'
 
