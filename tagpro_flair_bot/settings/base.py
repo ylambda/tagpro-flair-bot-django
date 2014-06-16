@@ -96,6 +96,9 @@ BOT_USER_AGENT = "/r/tagpro flair bot"
 LOGIN_REDIRECT_URL = '/'
 LOGIN_ERROR_URL = '/'
 
+# Set to your TagPro name to avoid needing to change it to a token
+TAGPRO_AUTH_TOKEN_OVERRIDE = os.environ.get('TAGPRO_AUTH_TOKEN_OVERRIDE', None)
+
 ROOT_URLCONF = 'tagpro_flair_bot.urls'
 
 WSGI_APPLICATION = 'tagpro_flair_bot.wsgi.development.application'

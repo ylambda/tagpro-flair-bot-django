@@ -1,7 +1,11 @@
 import string
 import random
+from django.conf import settings
 
 def gen_token():
+    token_override = getattr(settings, 'TAGPRO_AUTH_TOKEN_OVERRIDE', None)
+    if token_override is not None:
+        return token_override
     return ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(12))
 
 def set_token(strategy, details, user=None, *args, **kwargs):
