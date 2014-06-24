@@ -2,6 +2,7 @@ from BeautifulSoup import BeautifulSoup
 import json
 import praw
 import requests
+from urlparse import urlparse
 from django.conf import settings
 from django.contrib import messages
 from django.core.urlresolvers import reverse
@@ -15,6 +16,8 @@ from tpflair.flair import FLAIR_DATA, FLAIR, FLAIR_BY_POSITION
 reddit_api = praw.Reddit(user_agent=settings.BOT_USER_AGENT)
 reddit_api.login(username=settings.REDDIT_MOD_USERNAME, password=settings.REDDIT_MOD_PASSWORD)
 
+def redirect_home():
+    return redirect(reverse('home'))
 
 def json_response(data):
     return HttpResponse(json.dumps(data), content_type="application/json")
@@ -45,13 +48,33 @@ def parse_available_flair(html):
     return flairs
 
 
+def clean_tagpro_url(url):
+    """
+    Create our own URL by parsing the profile id and getting the profile from
+    a trusted domain like tagpro-origin.koalabeast.com.
+    """
+    path = urlparse(url).path
+    
+    # /profile/555.../ to a list of path elements, without any empty strings
+    # so, id = ['profile', 'id'][1]
+    tagpro_profile_id = filter(None, path.split('/'))[1]
+    return "http://{domain}/profile/{id}/".format(
+        domain=settings.TAGPRO_PROFILE_DOMAIN,
+        id=tagpro_profile_id)
+
+
 def auth_tagpro(request):
     """
     Verify that the user owns the specified TagPro profile.
     """
-    profile_url = request.POST.get('profile_url')
     token = request.session.get('tagpro_token')
-    response = requests.get(profile_url)
+    try:
+        profile_url = request.POST.get('profile_url')
+        cleaned_url = clean_tagpro_url(profile_url)
+        response = requests.get(cleaned_url)
+    except:
+        messages.error(request, "Please enter a valid TagPro profile URL.")
+        return redirect_home()
     parsed = BeautifulSoup(response.text)
     tagpro_name = parsed.title.getString()[len("TagPro Ball: "):]
     if tagpro_name == token:
@@ -61,7 +84,7 @@ def auth_tagpro(request):
         request.session['available_flair'] = parse_available_flair(parsed)
     else:
         messages.error(request, "Your name doesn't match the token!")
-    return redirect(reverse('home'))
+    return redirect_home()
 
 
 def deauth_tagpro(request):
@@ -69,7 +92,7 @@ def deauth_tagpro(request):
     Unlink the session from the specified TagPro profile.
     """
     deauth_tagpro_pipeline(request=request)
-    return redirect(reverse('home'))
+    return redirect_home()
 
 
 def get_current_flair(request):
@@ -101,4 +124,4 @@ def set_flair(request):
         if request.is_ajax():
             return json_response({'success': False, 'error': error})
         messages.error(request, error)
-    return redirect(reverse("home"))
+    return redirect_home()
