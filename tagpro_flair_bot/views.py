@@ -14,6 +14,7 @@ from tpflair.flair import FLAIR_DATA, FLAIR, FLAIR_BY_POSITION
 
 
 reddit_api = praw.Reddit(user_agent=settings.BOT_USER_AGENT)
+reddit_api.config.decode_html_entities = True
 reddit_api.login(username=settings.REDDIT_MOD_USERNAME, password=settings.REDDIT_MOD_PASSWORD)
 
 def redirect_home():
