@@ -3,4 +3,5 @@ Django==1.6.5
 django-toolbelt==0.0.1
 praw==2.1.17
 python-social-auth==0.1.26
+raven==5.0.0
 requests==2.3.0
