@@ -29,6 +29,11 @@ if RAVEN_PUBLIC_KEY and RAVEN_PRIVATE_KEY and RAVEN_PROJECT_ID:
     INSTALLED_APPS = INSTALLED_APPS + (
         'raven.contrib.django.raven_compat',)
 
+    MIDDLEWARE_CLASSES = (
+        'raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware',
+        ) + MIDDLEWARE_CLASSES + (
+        'raven.contrib.django.raven_compat.middleware.Sentry404CatchMiddleware',)
+
 try:
     from localsettings import *
 except ImportError:

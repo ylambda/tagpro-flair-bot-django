@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load staticfiles raven %}
 <html doctype="html" class="background">
 <head>
 <title>{% block title %}TagPro Flair Bot{% endblock %}</title>
@@ -22,6 +22,10 @@
 </article>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="{% static 'js/jquery.cookie.js' %}"></script>
+<script src="//cdn.ravenjs.com/1.1.15/jquery,native/raven.min.js"></script>
+<script type="text/javascript">
+Raven.config('{% sentry_public_dsn %}').install();
+</script>
 <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
