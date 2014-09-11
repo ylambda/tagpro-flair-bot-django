@@ -9,8 +9,7 @@ def gen_token():
     return ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(12))
 
 def set_token(strategy, details, user=None, *args, **kwargs):
-    request = kwargs.get('request')
-    request.session['tagpro_token'] = gen_token()
+    strategy.request.session['tagpro_token'] = gen_token()
 
 def deauth_tagpro(*args, **kwargs):
     request = kwargs.get('request')
