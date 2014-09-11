@@ -12,7 +12,7 @@ def set_token(strategy, details, user=None, *args, **kwargs):
     strategy.request.session['tagpro_token'] = gen_token()
 
 def deauth_tagpro(*args, **kwargs):
-    request = kwargs.get('request')
+    request = kwargs.get('strategy').request
     if 'tp_authenticated' in request.session:
         del request.session['tp_authenticated']
     if 'tp_profile' in request.session:
