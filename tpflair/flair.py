@@ -14,7 +14,7 @@ FLAIR_DATA = [
     ("Fools", "How Foolish", "-32px -32px"),
     ("Easter", "Hare Today, Goon Tomorrow", "-48px -32px"),
     ("Unfortunate", "UnfortunateSniper Hacks TagPro", "-64px -32px"),
-    ("Pumpkin", "So Very Scary", "-80px -32px"),
+    ("Halloween", "So Very Scary", "-80px -32px"),
     ("Axe", "Daryl Would Be Proud", "-96px -32px"),
     ("Bacon", "Bacon (6&#176;)", "0px -80px"),
     ("Moon", "Moon (11&#176;)", "-16px -80px"),
