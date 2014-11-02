@@ -16,10 +16,24 @@
 </ul>
 {% endif %}
 
-{% block heading %}<h1>/r/TagPro Flair Bot</h1>{% endblock %}
+{% block heading %}<h1><a href="https://www.reddit.com/r/TagPro">/r/TagPro</a> Flair Bot</h1>{% endblock %}
 
 {% block content %}
 {% endblock %}
+<div class="section lineup">
+    <div>
+        <img src="{% static 'img/reddit.png' %}" border="0">
+        <span>
+            <a href="http://www.reddit.com/message/compose/?to=TagProPreciousRoy" target="_blank">Problems? Message Precious Roy</a>
+        </span>
+    </div>
+    <div>
+        <img src="{% static 'img/github.png' %}" border="0">
+        <span>
+            <a href="https://github.com/TagPro-PreciousRoy/tagpro-flair-bot-django" target="_blank">Issues, features, pull requests welcome</a>
+        </span>
+    </div>
+</div>
 </article>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="{% static 'js/jquery.cookie.js' %}"></script>
