@@ -37,6 +37,8 @@ INSTALLED_APPS = (
 
     'raven.contrib.django.raven_compat',
     'social.apps.django_app.default',
+
+    'tagpro_flair_bot',
 )
 
 MIDDLEWARE_CLASSES = (
