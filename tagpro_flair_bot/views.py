@@ -45,6 +45,10 @@ def parse_available_flair(html_soup):
         icon = row.find('div')
         if icon and row.get("class", "") != "fade":
             position = icon['style'][len('background-position: '):]
+            # For testing flair refresh capability, uncomment to remove
+            # bacon, comment again to see it reappear.
+            #if not FLAIR_BY_POSITION[position]['id'] == "Bacon":
+            #    flairs.append(FLAIR_BY_POSITION[position]['id'])
             flairs.append(FLAIR_BY_POSITION[position]['id'])
     return flairs
 
@@ -64,6 +68,16 @@ def clean_tagpro_url(url):
         id=tagpro_profile_id)
 
 
+def get_tagpro_profile(profile_url):
+    """
+    Retrieve the TagPro profile associated with the given `profile_url`
+    after cleaning it.
+    """
+    cleaned_url = clean_tagpro_url(profile_url)
+    response = requests.get(cleaned_url)
+    return response
+
+
 def auth_tagpro(request):
     """
     Verify that the user owns the specified TagPro profile.
@@ -71,8 +85,7 @@ def auth_tagpro(request):
     token = request.session.get('tagpro_token')
     try:
         profile_url = request.POST.get('profile_url')
-        cleaned_url = clean_tagpro_url(profile_url)
-        response = requests.get(cleaned_url)
+        response = get_tagpro_profile(profile_url)
     except:
         messages.error(request, "Please enter a valid TagPro profile URL.")
         return redirect_home()
@@ -93,6 +106,24 @@ def deauth_tagpro(request):
     Unlink the session from the specified TagPro profile.
     """
     deauth_tagpro_pipeline(request=request)
+    return redirect_home()
+
+
+def refresh_flair(request):
+    """
+    Refresh the flair available from the linked TagPro account.
+    """
+    if not request.session['tp_authenticated']:
+        messages.error(request, "You have not authenticated your TagPro account!")
+        return redirect_home()
+    try:
+        profile_url = request.session['tp_profile']
+        response = get_tagpro_profile(profile_url)
+    except:
+        messages.error(request, "Unable to retrieve flair, please check your TagPro URL.")
+        return redirect_home()
+    parsed = BeautifulSoup(response.text)
+    request.session['available_flair'] = parse_available_flair(parsed)
     return redirect_home()
 
 
