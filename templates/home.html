@@ -43,7 +43,10 @@
 <h2>Step 4</h2>
 <p><em>Choose your flair</em></p>
 {% if request.session.tp_authenticated %}
-        
+    <form action="{% url 'refresh_flair' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Refresh Available Flair" />
+    </form>
     {% if request.session.available_flair %}
     <form action="{% url 'set_flair' %}" method="post" id="flair-form">
     {% csrf_token %}
