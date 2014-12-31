@@ -45,10 +45,6 @@ def parse_available_flair(html_soup):
         icon = row.find('div')
         if icon and row.get("class", "") != "fade":
             position = icon['style'][len('background-position: '):]
-            # For testing flair refresh capability, uncomment to remove
-            # bacon, comment again to see it reappear.
-            #if not FLAIR_BY_POSITION[position]['id'] == "Bacon":
-            #    flairs.append(FLAIR_BY_POSITION[position]['id'])
             flairs.append(FLAIR_BY_POSITION[position]['id'])
     return flairs
 
