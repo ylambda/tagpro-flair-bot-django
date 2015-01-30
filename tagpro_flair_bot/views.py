@@ -44,7 +44,7 @@ def parse_available_flair(html_soup):
     for row in rows:
         icon = row.find('div')
         if icon and row.get("class", "") != "fade":
-            position = icon['style'][len('background-position: '):]
+            position = str(icon['style'][len('background-position: '):])
             flairs.append(FLAIR_BY_POSITION[position]['id'])
     return flairs
 
