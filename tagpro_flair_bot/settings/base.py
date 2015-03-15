@@ -8,7 +8,7 @@ BASE_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), '../')
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '=r#xr(wfdh@*)a8omuulxg25&xhh2mpbla#0hb!1&*w5p7+8&)'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '=r#xr(wfdh@*)a8omuulxg25&xhh2mpbla#0hb!1&*w5p7+8&)')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -89,6 +89,10 @@ SOCIAL_AUTH_DISCONNECT_PIPELINE = (
 
 SOCIAL_AUTH_REDDIT_KEY = os.environ.get('SOCIAL_AUTH_REDDIT_KEY', None)
 SOCIAL_AUTH_REDDIT_SECRET = os.environ.get('SOCIAL_AUTH_REDDIT_SECRET', None)
+
+RAVEN_PUBLIC_KEY = os.environ.get('RAVEN_PUBLIC_KEY', None)
+RAVEN_PRIVATE_KEY = os.environ.get('RAVEN_PRIVATE_KEY', None)
+RAVEN_PROJECT_ID = os.environ.get('RAVEN_PROJECT_ID', None)
 
 REDDIT_MOD_USERNAME = os.environ.get('REDDIT_MOD_USERNAME', None)
 REDDIT_MOD_PASSWORD = os.environ.get('REDDIT_MOD_PASSWORD', None)
