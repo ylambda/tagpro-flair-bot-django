@@ -45,7 +45,10 @@ def parse_available_flair(html_soup):
         icon = row.find('div')
         if icon and row.get("class", "") != "fade":
             position = str(icon['style'][len('background-position: '):])
-            flairs.append(FLAIR_BY_POSITION[position]['id'])
+            try:
+                flairs.append(FLAIR_BY_POSITION[position]['id'])
+            except KeyError:
+                pass
     return flairs
 
 
