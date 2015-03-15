@@ -12,6 +12,9 @@ from django.views.generic import TemplateView
 from social_auth.pipeline import deauth_tagpro as deauth_tagpro_pipeline
 from tpflair.flair import FLAIR_DATA, FLAIR, FLAIR_BY_POSITION
 
+import logging
+logger = logging.get_logger(__name__)
+
 
 reddit_api = praw.Reddit(user_agent=settings.BOT_USER_AGENT)
 reddit_api.config.decode_html_entities = True
@@ -48,7 +51,8 @@ def parse_available_flair(html_soup):
             try:
                 flairs.append(FLAIR_BY_POSITION[position]['id'])
             except KeyError:
-                pass
+                logger.warn("New flair at position %(position)s",
+                    extra={'position': position, 'row': row})
     return flairs
 
 
