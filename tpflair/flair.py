@@ -18,6 +18,7 @@ FLAIR_DATA = [
     ("Axe", "Daryl Would Be Proud", "-96px -32px"),
     ("Birthday2", "Happy 2nd Birthday TagPro", "-112px -32px"),
     ("Mario", "Tower 1-1 Complete", "-128px -32px"),
+    ("Lucky2", "Good and Lucky", "-144px -32px"),
     ("Bacon", "Bacon (6&#176;)", "0px -80px"),
     ("Moon", "Moon (11&#176;)", "-16px -80px"),
     ("Freezing", "Freezing (32&#176;)", "-32px -80px"),
