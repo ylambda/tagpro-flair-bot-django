@@ -60,6 +60,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, "templates/"),)
 
+AUTH_USER_MODEL = 'tagpro_flair_bot.TagProUser'
+
 AUTHENTICATION_BACKENDS = (
     'social_auth.backend.RedditOAuth2',
     'django.contrib.auth.backends.ModelBackend',
