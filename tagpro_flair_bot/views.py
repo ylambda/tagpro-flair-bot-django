@@ -13,7 +13,7 @@ from social_auth.pipeline import deauth_tagpro as deauth_tagpro_pipeline
 from tpflair.flair import FLAIR_DATA, FLAIR, FLAIR_BY_POSITION
 
 import logging
-logger = logging.get_logger(__name__)
+logger = logging.getLogger(__name__)
 
 
 reddit_api = praw.Reddit(user_agent=settings.BOT_USER_AGENT)
