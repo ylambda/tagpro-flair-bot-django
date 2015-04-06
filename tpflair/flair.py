@@ -21,6 +21,7 @@ FLAIR_DATA = [
     ("Lucky2", "Good and Lucky", "-144px -32px"),
     ("Fools2", "Clowning Around Gravity", "-160px -32px"),
     ("Easter2", "Racing for Eggs", "0px -48px"),
+    ("Easter3", "Racing For Carrots", "-16px -48px"),
     ("Bacon", "Bacon (6&#176;)", "0px -80px"),
     ("Moon", "Moon (11&#176;)", "-16px -80px"),
     ("Freezing", "Freezing (32&#176;)", "-32px -80px"),
