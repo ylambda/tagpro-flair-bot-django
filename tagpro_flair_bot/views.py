@@ -41,7 +41,7 @@ def parse_available_flair(html_soup):
     Helper function which pulls the active flairs from the parsed HTML of a
     user's profile page.
     """
-    flair_table = html_soup.findAll('table')[2]
+    flair_table = html_soup.findAll('table')[4]
     rows = flair_table.findAll('tr')
     flairs = []
     for row in rows:
