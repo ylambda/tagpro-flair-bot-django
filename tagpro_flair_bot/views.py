@@ -116,7 +116,7 @@ def refresh_flair(request):
     """
     Refresh the flair available from the linked TagPro account.
     """
-    if not request.session['tp_authenticated']:
+    if not request.session.get('tp_authenticated'):
         messages.error(request, "You have not authenticated your TagPro account!")
         return redirect_home()
     try:
