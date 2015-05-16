@@ -11,6 +11,12 @@ class RedditOAuth2(DefaultRedditOAuth2):
         })
         return headers
 
+    def get_key_and_secret(self):
+        if self.strategy.request.is_secure():
+            return self.setting('KEY_SECURE'), self.setting('SECRET_SECURE')
+
+        return super(RedditOAuth2, self).get_key_and_secret()
+
     def user_data(self, access_token, *args, **kwargs):
         retry_count = 0
         exc = None
