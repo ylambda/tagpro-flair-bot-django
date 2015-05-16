@@ -4,7 +4,7 @@
 This is a Django project to allow users to assign their own Reddit flair based
 on what they have earned with their TagPro profile.
 
-The following environmental variables need to be set to run the app:
+The following *environmental variables* need to be set to run the app:
 
 * ``SOCIAL_AUTH_REDDIT_KEY`` and ``SOCIAL_AUTH_REDDIT_SECRET``
     * Obtained through Reddit. You must create an app in your
