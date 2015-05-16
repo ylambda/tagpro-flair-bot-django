@@ -9,6 +9,9 @@ The following environmental variables need to be set to run the app:
 * ``SOCIAL_AUTH_REDDIT_KEY`` and ``SOCIAL_AUTH_REDDIT_SECRET``
     * Obtained through Reddit. You must create an app in your
     [Reddit preferences](https://ssl.reddit.com/prefs/apps/).
+* ``SOCIAL_AUTH_REDDIT_KEY_SECURE`` and ``SOCIAL_AUTH_REDDIT_SECRET_SECURE``
+    * If you want to support SSL, create a second app with a https://
+    `redirect_uri`, and set these to this app's key/secret.
 * ``REDDIT_MOD_SUBREDDIT``
     * Subreddit flairs are assigned for.
 * ``REDDIT_MOD_USERNAME``
