@@ -94,7 +94,7 @@ def auth_tagpro(request):
         return redirect_home()
     parsed = BeautifulSoup(response.text)
     tagpro_name = parsed.title.getString()[len("TagPro Ball: "):]
-    if tagpro_name.replace(' ', '') == token:
+    if tagpro_name.replace(' ', '') == token.replace(' ', ''):
         request.session['tp_authenticated'] = True
         request.session['tp_profile'] = profile_url
         request.session['current_flair'] = get_current_flair(request)
